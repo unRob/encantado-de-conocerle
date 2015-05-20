@@ -2,8 +2,7 @@ $(function DOMReady() {
 
 	var loc = document.location.pathname;
 
-	var rpatito = "http://representantes.dev/busqueda/de-distrito/";
-
+	var rpatito = "http://representantes.pati.to/busqueda/de-distrito/";
 
 	var getDetails = function() {
 		var path = [].slice.call(arguments) //Javascript: WINNING!
