@@ -15,8 +15,6 @@ body {
 
 
 
-
-
 #pie {
 	text-align: center;
 	font-family: 'Playfair Display', 'Georgia', sans-serif;
@@ -53,6 +51,10 @@ body {
 	#pie h2 {
 		font-size: .8em;
 		line-height: 1em;
+	}
+
+	#gh-badge img {
+		height: 50px;
 	}
 }
 
