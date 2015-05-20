@@ -32,7 +32,9 @@ var Chatoa = React.createClass({
 	displayName: 'Chatoa',
 	show: function() {
 		$('#resultados').addClass('detallados');
-		React.render(React.createElement(Candidatoa, {data: this.props.data}), document.getElementById('candidatoa'));
+		var node = document.getElementById('candidatoa');
+		React.unmountComponentAtNode(node);
+		React.render(React.createElement(Candidatoa, {data: this.props.data}), node);
 	},
 	render: function () {
 		var data = this.props.data;

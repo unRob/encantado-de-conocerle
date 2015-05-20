@@ -60,28 +60,37 @@ main {
 	width: 100%;
 	max-width: 700px;
 	margin: 0 auto;
-	-webkit-perspective: 1000;
 }
 
 
 #resultados {
 	margin-top: 2em;
 	background: #eee;
-	-webkit-transform: rotateY(0deg);
-	-webkit-transform-style: preserve-3d;
-	-webkit-transition: all .5s ease-in-out;
-	-webkit-backface-visibility: hidden;
+	-webkit-perspective: 1000;
+
 }
 
-#resultados.detallados {
+#card {
+	position: relative;
+	-webkit-transform: rotateY(0deg);
+	min-height: 100px;
+	-webkit-transform-style: preserve-3d;
+	-webkit-transition: all .5s ease-in-out;
+}
+
+#resultados.detallados #card {
 	-webkit-transform: rotateY(180deg);
 	-webkit-transition: all .5s ease-in-out;
 }
 
 #lista, #candidatoa {
 	-webkit-backface-visibility: hidden;
-	position: relative;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
 	background: #eee;
+	box-sizing: border-box;
 }
 
 #lista {
@@ -91,13 +100,7 @@ main {
 
 #candidatoa {
 	-webkit-transform:rotateY(180deg);
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	background: #eee;
 	padding: 1em;
-	box-sizing: border-box;
 }
 
 
