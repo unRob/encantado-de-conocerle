@@ -93,6 +93,7 @@ main {
 }
 
 #lista {
+	position: relative;
 	z-index: 2;
 	-webkit-transform:rotateY(0deg);
 }
@@ -139,9 +140,6 @@ main {
 	font-weight: normal;
 }
 
-.templete {
-
-}
 
 .chatoa {
 	background: #eee;
