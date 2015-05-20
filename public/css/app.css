@@ -43,7 +43,11 @@ body {
 @media (max-width: 600px) {
 	#pie h1 {
 		font-size: 2em;
+	}
+
+	#pie h1 span {
 		letter-spacing: auto;
+		font-size: 1em;
 	}
 
 	#pie h2 {
