@@ -81,6 +81,7 @@ main {
 	width: 100%;
 	background: #eee;
 	padding: 1em;
+	box-sizing: border-box;
 }
 
 
