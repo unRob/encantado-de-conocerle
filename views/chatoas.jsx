@@ -30,14 +30,16 @@ var _partidos = {
 
 var Chatoa = React.createClass({
 	displayName: 'Chatoa',
+	show: function() {
+		$('#resultados').addClass('detallados');
+		React.render(<Candidatoa data={this.props.data} />, document.getElementById('candidatoa'));
+	},
 	render: function () {
 		var data = this.props.data;
 
 		var count_partidos = data.partidos.length;
 		var partidos = data.partidos.map(function(p){
 			var np = _partidos[p.trim()] || p.toLowerCase();
-
-			console.log(p);
 			if (np === 'pan'){
 				p = np;
 			}
@@ -47,7 +49,7 @@ var Chatoa = React.createClass({
 		estilo = {backgroundImage: "url("+data.foto+");"};
 
 		return (
-			<article className="chatoa clearfix">
+			<article className="chatoa clearfix" onClick={this.show}>
 				<header className={count_partidos+"-partidos chatoa-header"}>
 					<div className="foto" style={estilo}></div>
 					<h1>{data.nombre}</h1>
@@ -56,7 +58,126 @@ var Chatoa = React.createClass({
 						{partidos}
 					</ul>
 				</header>
+
 			</article>
+		);
+	}
+});
+
+var Candidatoa = React.createClass({
+	displayName: 'Candidatoa',
+	hide: function(){
+		$('#resultados').removeClass('detallados');
+	},
+	lines: function(text) {
+		return text.split("\n").map(function(l){ return(<p>{l}</p>); });
+	},
+	mentiras: function(d) {
+		var laboral, trayectoria;
+		if (d.mentiras.laborales || d.mentiras.trayectoria) {
+			if (d.mentiras.laborales) {
+				laboral = (
+					<div class="mentira">
+						<h3>Historia Profesional/laboral</h3>
+						{this.lines(d.mentiras.laborales)}
+					</div>
+				);
+			}
+
+			if (d.mentiras.trayectoria) {
+				trayectoria = (
+					<div class="mentira">
+						<h3>Trayectoria política</h3>
+						{this.lines(d.mentiras.trayectoria)}
+					</div>
+				);
+			}
+
+			return (
+				<div id="mentiras">
+					{laboral}
+					{trayectoria}
+				</div>
+			);
+		}
+	},
+	social: function(data) {
+		console.log(data);
+		var redes = data.map(function(datum){
+			return (
+				<li>
+					<a className={datum.red} href={datum.url}>{datum.red}</a>
+				</li>
+			);
+		});
+
+		return(
+			<ul id="social">
+				{redes}
+			</ul>
+		);
+	},
+	body: function(){
+		var d = this.props.data;
+
+		var otros = [];
+		if (d.telefono) {
+			otros.push({red: 'telefono', url: "tel://"+d.telefono});
+		}
+
+		if (d.correo) {
+			otros.push({red: 'correo', url: "mailto:"+d.correo});
+		}
+
+
+		var social = this.social(otros.concat(social || []));
+
+		return (
+			<div id="datum">
+				{social}
+
+				{this.mentiras(d)}
+			</div>
+		);
+	},
+	render: function(){
+		var data = this.props.data;
+		var partidos = data.partidos.map(function(p){
+			var np = _partidos[p.trim()] || p.toLowerCase();
+			if (np === 'pan'){
+				p = np;
+			}
+
+			return(<li className={"partido "+np}>{p.toLowerCase()}</li>);
+		});
+
+		estilo = {backgroundImage: "url("+data.foto+");"};
+
+		var templete;
+
+		if (data.mentiras.templete) {
+			templete = this.lines(data.mentiras.templete);
+		}
+
+		return (
+			<section>
+				<button id="regresar" onClick={this.hide}>&laquo; regresar</button>
+				<header className="chatoa-header">
+					<div className="foto" style={estilo}></div>
+					<h1>{data.nombre}</h1>
+					<h2>{data.suplente}</h2>
+
+					<ul className="partidos">
+						{partidos}
+					</ul>
+
+					<div className="templete">{templete}</div>
+
+				</header>
+
+				{this.body()}
+
+			</section>
 		);
 	}
 });

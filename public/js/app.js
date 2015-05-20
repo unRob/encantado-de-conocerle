@@ -27,7 +27,10 @@ $(function DOMReady() {
 	};
 
 	var render = function(chatoas){
-		React.render(React.createElement(Chatoas, {data: chatoas}), document.getElementById('resultados'));
+		React.render(React.createElement(Chatoas, {data: chatoas}), document.getElementById('lista'));
+		setTimeout(function(){
+			// $('.chatoa').eq(1).click();
+		}, 500);
 	};
 
 
