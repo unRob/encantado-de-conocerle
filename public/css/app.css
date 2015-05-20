@@ -1,0 +1,146 @@
+body {
+	background: #ddd;
+	color: #333;
+	font: 100 18px/1.5em 'Avenir Next', 'Avenir', 'Montserrat', sans-serif;
+}
+
+.clear { clear: both; float: none; }
+.clearfix::after {
+	content: ".";
+	display: block;
+	height: 0;
+	clear: both;
+	visibility: hidden;
+}
+
+
+
+
+
+#pie {
+	text-align: center;
+	font-family: 'Playfair Display', 'Georgia', sans-serif;
+}
+
+#pie h1 {
+	font-size: 2.5em;
+	line-height: 1.5em;
+	color: #000;
+}
+
+#pie h1 span {
+	font-family: 'Avenir Next', 'Avenir', 'Montserrat', sans-serif;
+	text-transform: uppercase;
+	letter-spacing: .25em;
+	display: block;
+	font-size: 1.2em;
+}
+
+#pie h2 {
+	font-size: 1.5em;
+}
+
+main {
+	width: 100%;
+	max-width: 700px;
+	margin: 0 auto;
+}
+
+
+#resultados {
+	margin-top: 2em;
+	background: #eee;
+}
+
+#css-ftw {
+	text-align: center;
+}
+
+#resultados h3 {
+	font-family: 'Playfair Display', 'Georgia', sans-serif;
+	text-transform: uppercase;
+	text-align: center;
+	font-size: 1.5em;
+	letter-spacing: .2em;
+	line-height: 1.2em;
+	margin: 0 auto;
+	margin-top: -.6em;
+	background: #eee;
+	border-radius: 4px;
+	display: inline-block;
+	padding: .5em 1em;
+	box-shadow: 0px -2px 3px rgba(100,100,100,.2);
+}
+
+.chatoa {
+	background: #eee;
+	margin: 1em;
+	padding: 1em;
+	border: 1px solid #eee;
+	border-radius: 4px;
+}
+
+.chatoa:hover {
+	background: #fff;
+	border: 1px solid #aaa;
+	border-radius: 4px;
+}
+
+.chatoa-header h1 {
+	font-size: 1.3em;
+	margin: 0;
+	line-height: 1.2em;
+}
+
+.chatoa-header h2 {
+	font-family: 'Playfair Display', 'Georgia', sans-serif;
+	font-size: .8em;
+	font-weight: 100;
+	margin: 0;
+	line-height: 1.2em;
+	font-style: italic;
+	margin-bottom: 1em;
+}
+
+.chatoa-header h2:before {
+	content: 'suplente: ';
+}
+
+.partidos {
+	list-style: none;
+	margin: 0;
+}
+
+.partido {
+	font-size: .7em;
+	display: inline-block;
+	border: 1px solid #666;
+	padding: 0px 8px;
+	border-radius: 2px;
+	margin-left: 5px;
+	font-weight: bold;
+	color: #999;
+}
+
+.partido.pan   {border-color: #06338e;}
+.partido.prd   {border-color: #E9C40E;}
+.partido.pri   {border-color: #E8150E;}
+.partido.pvem  {border-color: #03A316;}
+.partido.panal {border-color: #0EE8E8;}
+.partido.mc    {border-color: #FFAE00;}
+.partido.pt    {border-color: #A30303;}
+.partido.morena{border-color: #FA5353;}
+.partido.ph    {border-color: #B30FA5;}
+.partido.es    {border-color: #41ABC0;}
+
+.foto {
+	width: 100px;
+	height: 100px;
+	background-size: cover;
+	background-position: middle center;
+	border-radius: 100px;
+	display: inline;
+	float: left;
+	box-shadow: 0px 0px 3px rgba(100,100,100,.7);
+	margin-right: 1em;
+}
