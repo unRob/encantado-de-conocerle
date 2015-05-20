@@ -285,3 +285,17 @@ main {
 #social a.facebook	{ background: #3b5998; }
 #social a.youtube	{ background: #cd201f; }
 #social a.twitter	{ background: #00acee; }
+
+footer {
+	text-align: center;
+	font-weight: normal;
+}
+
+footer a {
+	color: #ED1E79;
+	font-weight: bold;
+}
+
+footer a:hover {
+	text-decoration: none;
+}
