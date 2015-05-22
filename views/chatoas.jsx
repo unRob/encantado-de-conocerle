@@ -12,6 +12,7 @@ var Chatoas = React.createClass({
 			<div id="chatoas">
 				<div id="css-ftw">
 					<h3>Tus {count} candidatoas:</h3>
+					<h2>Distrito {this.props.data.nombre_distrito} <a id="reload" href="/">&#8635;</a></h2>
 				</div>
 				{chatoas}
 			</div>

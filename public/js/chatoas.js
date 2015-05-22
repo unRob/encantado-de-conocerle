@@ -11,7 +11,8 @@ var Chatoas = React.createClass({
 		return (
 			React.createElement("div", {id: "chatoas"}, 
 				React.createElement("div", {id: "css-ftw"}, 
-					React.createElement("h3", null, "Tus ", count, " candidatoas:")
+					React.createElement("h3", null, "Tus ", count, " candidatoas:"), 
+					React.createElement("h2", null, "Distrito ", this.props.data.nombre_distrito, " ", React.createElement("a", {id: "reload", href: "/"}, "↻"))
 				), 
 				chatoas
 			)

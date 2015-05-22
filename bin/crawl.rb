@@ -61,25 +61,40 @@ def formatoTelefono digitos, sinLD = false
   formatted
 end
 
+def partidos args
+  args.map do |arg|
+    case arg.downcase
+      when 'partido revolucionario instititucional' then 'pri'
+      when 'coalición de izquierda progresista' then [:prd, :pt]
+      when 'partido verde ecologista de méxico' then [:pvem]
+      else arg
+    end
+  end.flatten
+end
+
 
 ids.each do |i|
   body = q % i
   c = JSON.parse(HTTParty.post(url_actor, body: body, headers: headers).body, symbolize_names: true)
 
+  next unless c[:idDistritoCan]
   dto = "df-#{c[:idEstadoCan]}-#{c[:idDistritoCan]}"
   puts "#{dto} / #{body}"
 
   telefono = formatoTelefono(c[:telefono]) if c[:telefono]
-  foto = "http://www.ine.mx/portal/Elecciones/Proceso_Electoral_Federal_2014-2015/CandidatasyCandidatos/imagencandidato.html?k=#{c[:fotografia]}&s=#{c[:sexo]}"
+  if c[:fotografia]
+    foto = "http://www.ine.mx/portal/Elecciones/Proceso_Electoral_Federal_2014-2015/CandidatasyCandidatos/imagencandidato.html?k=#{c[:fotografia]}&s=#{c[:sexo]}"
+  else
+    foto = "http://www.ine.mx/portal/Elecciones/Proceso_Electoral_Federal_2014-2015/CandidatasyCandidatos/img/Candidatos/Candidat#{c[:sexo] == 'Hombre' ? 'o' : 'a'}Avtr1.png"
+  end
 
-  nombre = c[:nombrePropietario].titleize
-  suplente = c[:nombreSuplente].titleize
+  nombre = c[:nombrePropietario].mb_chars.squish.titleize
+  suplente = c[:nombreSuplente].mb_chars.squish.titleize
 
   actor = {
     nombre: nombre,
     suplente: suplente,
-    partidos: c[:nombreAsociacion].split('-'),
-    coalicion: c[:coalicion],
+    partidos: partidos(c[:nombreAsociacion].split('-')),
     sexo: c[:sexo] == "Hombre",
     edad: c[:edad],
     telefono: telefono,
