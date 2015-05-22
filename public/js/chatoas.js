@@ -21,12 +21,10 @@ var Chatoas = React.createClass({
 });
 
 var _partidos = {
-	'PARTIDO ACCIÓN NACIONAL': 'pan',
-	'MOVIMIENTO CIUDADANO': 'mc',
-	'NUEVA ALIANZA': 'panal',
-	'PARTIDO HUMANISTA': 'ph',
-	'ENCUENTRO SOCIAL': 'es',
-	'COALICIÓN DE IZQUIERDA PROGRESISTA': 'prd'
+	'movimiento ciudadano': 'mc',
+	'nueva alianza': 'panal',
+	'partido humanista': 'ph',
+	'encuentro social': 'es',
 };
 
 var Chatoa = React.createClass({
@@ -43,10 +41,6 @@ var Chatoa = React.createClass({
 		var count_partidos = data.partidos.length;
 		var partidos = data.partidos.map(function(p){
 			var np = _partidos[p.trim()] || p.toLowerCase();
-			if (np === 'pan'){
-				p = np;
-			}
-
 			return(React.createElement("li", {className: "partido "+np}, p.toLowerCase()));
 		});
 		estilo = {backgroundImage: "url("+data.foto+");"};
