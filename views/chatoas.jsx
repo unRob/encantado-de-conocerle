@@ -105,7 +105,6 @@ var Candidatoa = React.createClass({
 		}
 	},
 	social: function(data) {
-		console.log(data);
 		var redes = data.map(function(datum){
 			return (
 				<li>
@@ -133,7 +132,7 @@ var Candidatoa = React.createClass({
 		}
 
 
-		var social = this.social(otros.concat(social || []));
+		var social = this.social(otros.concat(d.social || []));
 
 		return (
 			<div id="datum">

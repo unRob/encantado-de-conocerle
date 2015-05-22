@@ -63,10 +63,15 @@ end
 
 def partidos args
   args.map do |arg|
-    case arg.downcase
-      when 'partido revolucionario instititucional' then 'pri'
+    arg = arg.mb_chars.downcase
+    case arg
+      when /independiente/ then :independiente
+      when 'partido revolucionario institucional' then :pri
+      when 'partido de la revolución democrática' then :prd
+      when 'partido del trabajo' then :pt
       when 'coalición de izquierda progresista' then [:prd, :pt]
       when 'partido verde ecologista de méxico' then [:pvem]
+      when 'partido acción nacional' then :pan
       else arg
     end
   end.flatten
@@ -79,7 +84,7 @@ ids.each do |i|
 
   next unless c[:idDistritoCan]
   dto = "df-#{c[:idEstadoCan]}-#{c[:idDistritoCan]}"
-  puts "#{dto} / #{body}"
+
 
   telefono = formatoTelefono(c[:telefono]) if c[:telefono]
   if c[:fotografia]
@@ -110,11 +115,12 @@ ids.each do |i|
   }
 
   actor[:social] << {red: :facebook, url: "https://#{c[:redFacebook].gsub(/^https?:\/\//, '')}"} if c[:redFacebook]
-  actor[:social] << {red: :twitter, url: "https//twitter.com/"+c[:redTwitter].gsub('@', '')} if c[:redTwitter]
+  actor[:social] << {red: :twitter, url: "https://twitter.com/"+c[:redTwitter].gsub('@', '')} if c[:redTwitter]
   actor[:social] << {red: :youtube, url: c[:redYoutube]} if c[:redYoutube]
 
   distritos[dto] ||= []
   distritos[dto] << actor
+  puts "#{dto} / #{body} / #{actor[:partidos].join(',')}"
 
 end
 

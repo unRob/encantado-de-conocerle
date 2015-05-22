@@ -20,7 +20,7 @@ $(function DOMReady() {
 	var entidades = ["Aguascalientes", "Baja California", "Baja California Sur", "Campeche", "Coahuila", "Colima", "Chiapas", "Chihuahua", "Distrito Federal", "Durango", "Guanajuato", "Guerrero", "Hidalgo", "Jalisco", "México", "Michoacán", "Morelos", "Nayarit", "Nuevo León", "Oaxaca", "Puebla", "Querétaro", "Quintana Roo", "San Luis Potosí", "Sinaloa", "Sonora", "Tabasco", "Tamaulipas", "Tlaxcala", "Veracruz", "Yucatán", "Zacatecas"];
 
 	var fetch = function(dto) {
-		var req = $.ajax({url: "/data/"+dto._id+".json"});
+		var req = $.ajax({url: "http://elecciones.rob.mx/candidatoas/"+dto._id+".json"});
 		req.fail(function fetch_ajax_error(err){
 			console.error(err);
 		});
