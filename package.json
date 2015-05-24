@@ -1,0 +1,26 @@
+{
+  "name": "candidatos.rob.mx",
+  "version": "1.0.0",
+  "description": "Lista de candidatos a diputados federales 2015",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/unRob/encantado-de-conocerle.git"
+  },
+  "author": "Roberto Hidalgo/Partido Surrealista Mexicano",
+  "license": "Patito",
+  "bugs": {
+    "url": "https://github.com/unRob/encantado-de-conocerle/issues"
+  },
+  "homepage": "https://github.com/unRob/encantado-de-conocerle",
+  "devDependencies": {
+    "browserify": "^10.2.1",
+    "jquery": "^2.1.4",
+    "react": "^0.13.3",
+    "reactify": "^1.1.1",
+    "uglify-js": "^2.4.23"
+  }
+}

@@ -1,11 +1,9 @@
+var React = require('react');
+var $ = require('jquery');
+
 var Chatoas = React.createClass({
 	displayName: 'Chatoas',
 	render: function() {
-		var chatoas = this.props.data.map(function(chatoa){
-			return(
-				<Chatoa key={chatoa.nombre} data={chatoa} />
-			);
-		});
 		var count = this.props.data.length;
 
 		return (
@@ -14,7 +12,9 @@ var Chatoas = React.createClass({
 					<h3>Tus {count} candidatoas:</h3>
 					<h2>Distrito {this.props.data.nombre_distrito} <a id="reload" href="/">&#8635;</a></h2>
 				</div>
-				{chatoas}
+				{this.props.data.map(function(chatoa){
+					return <Chatoa key={chatoa.nombre.toLocaleLowerCase().replace(/\s/g, '-')} data={chatoa} />
+				})}
 			</div>
 		);
 	}
@@ -41,9 +41,9 @@ var Chatoa = React.createClass({
 		var count_partidos = data.partidos.length;
 		var partidos = data.partidos.map(function(p){
 			var np = _partidos[p.trim()] || p.toLowerCase();
-			return(<li className={"partido "+np}>{p.toLowerCase()}</li>);
+			return(<li key={np} className={"partido "+np}>{p.toLowerCase()}</li>);
 		});
-		estilo = {backgroundImage: "url("+data.foto+");"};
+		estilo = {backgroundImage: "url("+data.foto+")"};
 
 		return (
 			<article className="chatoa clearfix" onClick={this.show}>
@@ -74,7 +74,7 @@ var Candidatoa = React.createClass({
 		if (d.mentiras.laborales || d.mentiras.trayectoria) {
 			if (d.mentiras.laborales) {
 				laboral = (
-					<div class="mentira">
+					<div className="mentira">
 						<h3>Historia Profesional/laboral</h3>
 						{this.lines(d.mentiras.laborales)}
 					</div>
@@ -83,7 +83,7 @@ var Candidatoa = React.createClass({
 
 			if (d.mentiras.trayectoria) {
 				trayectoria = (
-					<div class="mentira">
+					<div className="mentira">
 						<h3>Trayectoria política</h3>
 						{this.lines(d.mentiras.trayectoria)}
 					</div>
@@ -102,7 +102,7 @@ var Candidatoa = React.createClass({
 		var redes = data.map(function(datum){
 			return (
 				<li>
-					<a className={datum.red} href={datum.url}>{datum.red}</a>
+					<a className={datum.red} href={datum.url} target="_blank">{datum.red}</a>
 				</li>
 			);
 		});
@@ -144,10 +144,10 @@ var Candidatoa = React.createClass({
 				p = np;
 			}
 
-			return(<li className={"partido "+np}>{p.toLowerCase()}</li>);
+			return(<li key={np} className={"partido "+np}>{p.toLowerCase()}</li>);
 		});
 
-		estilo = {backgroundImage: "url("+data.foto+");"};
+		estilo = {backgroundImage: "url("+data.foto+")"};
 
 		var templete;
 
@@ -177,3 +177,5 @@ var Candidatoa = React.createClass({
 		);
 	}
 });
+
+module.exports = Chatoas;
