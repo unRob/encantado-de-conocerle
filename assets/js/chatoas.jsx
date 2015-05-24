@@ -10,7 +10,7 @@ var Chatoas = React.createClass({
 			<div id="chatoas">
 				<div id="css-ftw">
 					<h3>Tus {count} candidatoas:</h3>
-					<h2>Distrito {this.props.data.nombre_distrito} <a id="reload" href="/">&#8635;</a></h2>
+					<h2>Distrito {this.props.nombre} <a id="reload">x</a></h2>
 				</div>
 				{this.props.data.map(function(chatoa){
 					return <Chatoa key={chatoa.nombre.toLocaleLowerCase().replace(/\s/g, '-')} data={chatoa} />

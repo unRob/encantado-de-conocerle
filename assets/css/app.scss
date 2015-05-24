@@ -167,6 +167,7 @@ main {
 	background: #f6f6f6;
 	border: 1px solid #ccc;
 	border-radius: 4px;
+	cursor: pointer;
 	@include transition(all .2s ease-in);
 }
 
@@ -313,6 +314,74 @@ footer a {
 footer a:hover {
 	text-decoration: none;
 }
+
+
+// Mapa
+
+.hidden {
+	display: none;
+}
+
+#mapa {
+	background: #fff;
+	height: 400px;
+	position: relative;
+
+	#google-map {
+		height: 100%;
+		z-index: 0;
+	}
+
+	iframe {
+		width: 100% !important;
+		height: 100% !important;
+	}
+}
+
+#search {
+	z-index: 100;
+	display: block;
+	width: 90%;
+	position: absolute;
+	bottom: 1em;
+	right: 0;
+	left: 0;
+	margin: auto;
+}
+
+#text-locator {
+	box-sizing: border-box;
+	font-family: $sans-serif;
+	font-size: 1em;
+	width: 100%;
+	border: none;
+	box-shadow: 0px 0px 3px rgba(0,0,0,.5);
+	border-radius: 4px;
+	padding: .5em;
+}
+
+#fetch-me {
+	border: none;
+	background: #1EB919;
+	color: #fff;
+	position: absolute;
+	right: .125em;
+	top: .125em;
+	font-size: 2em;
+	height: 1em;
+	width: 1em;
+	border-radius: 1em;
+	text-align: center;
+	line-height: 1em;
+
+	&:hover {
+		background: darken(#1EB919, 10%);
+		cursor: pointer;
+	}
+}
+
+// END: Mapa
+
 
 @media (max-width: 600px) {
 

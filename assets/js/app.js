@@ -1,77 +1,86 @@
 var $ = require('jquery');
 var React = require('react');
 var Chatoas = require('./chatoas.jsx');
+var API = require('./api.js');
+var Mapa = require('./mapa.js');
+var api_key = 'AIzaSyD8qYIlRcEaYrYrAjKtE6Rz8XoMisOhiGI';
 
 $(function DOMReady() {
 
 	var loc = document.location.pathname.substr(1);
 
-	var rpatito = "http://representantes.pati.to/busqueda/de-distrito/";
-
-	var getDetails = function() {
-		var path = [].slice.call(arguments) //Javascript: WINNING!
-			.map(function(i) {return i.toString();})
-			.join('/');
-
-		var url = rpatito+path;
-		var req = $.ajax({url: url, type: 'get'});
-		req.fail(function ajax_error(data){
-			console.error(data);
-		});
-		return req;
+	var got_details = function(info) {
+		window.title = info.nombre_distrito;
+		window.history.pushState(info, "Candidatoas para Distrito "+info.nombre_distrito, "/"+info._id);
+		React.render(React.createElement(Chatoas, {data: info.items, nombre: info.nombre_distrito}), document.getElementById('lista'));
 	};
 
-	var entidades = ["Aguascalientes", "Baja California", "Baja California Sur", "Campeche", "Coahuila", "Colima", "Chiapas", "Chihuahua", "Distrito Federal", "Durango", "Guanajuato", "Guerrero", "Hidalgo", "Jalisco", "México", "Michoacán", "Morelos", "Nayarit", "Nuevo León", "Oaxaca", "Puebla", "Querétaro", "Quintana Roo", "San Luis Potosí", "Sinaloa", "Sonora", "Tabasco", "Tamaulipas", "Tlaxcala", "Veracruz", "Yucatán", "Zacatecas"];
-
-	var fetch = function(dto) {
-		var req = $.ajax({url: "http://elecciones.rob.mx/candidatoas/"+dto._id+".json"});
-		req.fail(function fetch_ajax_error(err){
-			console.error(err);
-		});
-		req.done(function(res){
-			var partes = dto._id.split('-').slice(1,3);
-			var nombre_distrito = partes.pop()+'/'+entidades[parseInt(partes.pop(), 10)-1];
-			window.title = nombre_distrito;
-			res.nombre_distrito = nombre_distrito;
-			render(res);
-			window.history.pushState(dto, "Candidatoas para Distrito "+nombre_distrito, "/"+dto._id);
-		});
+	var got_distrito = function(info) {
+		var dto = API.distrito(info);
+		dto.then(got_details);
 	};
 
-	var render = function(chatoas){
-		React.render(React.createElement(Chatoas, {data: chatoas}), document.getElementById('lista'));
-	};
+	$('#fetch-me').on('click', function(evt){
+		evt.preventDefault();
+		var pos = Mapa.marker.getPosition();
+		API.resolve(pos.lat(), pos.lng())
+			.done(function(info){
+				got_distrito(info);
+				$('#mapa').hide();
+			})
+			.fail(function(err){
+				$('#mapa').show();
+				alert("No encontré un distrito electoral para tu ubicación");
+			});
+	});
+
+	$('#resultados').on('click', '#reload', function(evt){
+		evt.preventDefault();
+		window.title = 'Candidatoas 2015';
+		window.history.pushState({}, "Candidatoas 2015", "/");
+		$('#lista').html('');
+		$('#mapa').show();
+		Mapa.instance('#mapa').setup(api_key).input.focus();
+		return false;
+	});
 
 
 	var getPositionAnd = function(doStuff) {
-		navigator.geolocation.getCurrentPosition(
-			function geo_location(pos) {
-				var coords = pos.coords;
-				getDetails('diputados', coords.latitude, coords.longitude).done(fetch);
-			},
-			function geo_error(e) {
-				if (e.code == e.PERMISSION_DENIED) {
-					if (confirm("Esta aplicación usa tu información geográfica para obtener tu distrito electoral. En ningún momento se guarda tu ubicación geográfica ni se relaciona de manera personalmente identificable, porque no somos malvados, sólo queremos hacer las cosas fáciles.\n\n¿Podemos volver a intentar a pedir tu ubicación?")){
-						getPositionAnd(doStuff);
-					} else {
-						$('#resultados').html("Ni que hacerle, revisa tus candidatos en el <a href='http://www.ine.mx/portal/Elecciones/Proceso_Electoral_Federal_2014-2015/CandidatasyCandidatos/'>INE</a>.");
+		if (navigator.hasOwnProperty('geolocation')){
+			navigator.geolocation.getCurrentPosition(
+				function geo_location(pos) {
+					var coords = pos.coords;
+					var resolved = API.resolve(coords.latitude, coords.longitude);
+					resolved.done(got_distrito);
+					resolved.fail(function(err){
+						alert("No encontré un distrito electoral para tu ubicación");
+					});
+				},
+				function geo_error(e) {
+					if (e.code == e.PERMISSION_DENIED) {
+						if (confirm("Esta aplicación usa tu información geográfica para obtener tu distrito electoral. En ningún momento se guarda tu ubicación geográfica ni se relaciona de manera personalmente identificable, porque no somos malvados, sólo queremos hacer las cosas fáciles.\n\n¿Podemos volver a intentar a pedir tu ubicación?")){
+							return getPositionAnd(doStuff);
+						}
 					}
-				} else {
-					alert("Algo no funcionó al intentar localizarte, y el programador que hizo este asunto no contempló que esto fuera a suceder, lo siento!");
+
+					Mapa.instance('#mapa').setup(api_key);
+				},
+				{
+					enableHighAccuracy: true,
+					timeout: 10000, //diez segundos
+					maximumAge: 60000 //un minuto
 				}
-			},
-			{
-				enableHighAccuracy: true,
-				timeout: 10000, //diez segundos
-				maximumAge: 60000 //un minuto
-			}
-		);
+			);
+		} else {
+			Mapa.instance('#mapa').setup(api_key);
+		}
+
 	};
 
 	if (loc === '') {
-		getPositionAnd(fetch);
+		getPositionAnd(got_details);
 	} else {
-		fetch({_id: loc});
+		API.distrito({_id: loc}).then(got_details);
 	}
 
 });
