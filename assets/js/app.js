@@ -54,6 +54,7 @@ $(function DOMReady() {
 					resolved.done(got_distrito);
 					resolved.fail(function(err){
 						alert("No encontré un distrito electoral para tu ubicación");
+						Mapa.instance('#mapa').setup(api_key);
 					});
 				},
 				function geo_error(e) {
