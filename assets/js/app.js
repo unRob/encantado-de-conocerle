@@ -38,9 +38,11 @@ $(function DOMReady() {
 		evt.preventDefault();
 		window.title = 'Candidatoas 2015';
 		window.history.pushState({}, "Candidatoas 2015", "/");
-		$('#lista').html('');
+		React.unmountComponentAtNode(document.getElementById('lista'));
 		$('#mapa').show();
-		Mapa.instance('#mapa').setup(api_key).input.focus();
+		var map = Mapa.instance('#mapa');
+		map.setup(api_key);
+		map.input.focus();
 		return false;
 	});
 
@@ -59,7 +61,7 @@ $(function DOMReady() {
 				},
 				function geo_error(e) {
 					if (e.code == e.PERMISSION_DENIED) {
-						if (confirm("Esta aplicación usa tu información geográfica para obtener tu distrito electoral. En ningún momento se guarda tu ubicación geográfica ni se relaciona de manera personalmente identificable, porque no somos malvados, sólo queremos hacer las cosas fáciles.\n\n¿Podemos volver a intentar a pedir tu ubicación?")){
+						if (confirm("Esta aplicación usa tu información geográfica para obtener tu distrito electoral. En ningún momento se guarda tu ubicación geográfica ni se relaciona de manera personalmente identificable —porque no somos malvados— sólo queremos hacer las cosas fáciles.\n\n¿Podemos volver a intentar a pedir tu ubicación?")){
 							return getPositionAnd(doStuff);
 						}
 					}
@@ -77,6 +79,7 @@ $(function DOMReady() {
 		}
 
 	};
+
 
 	if (loc === '') {
 		getPositionAnd(got_details);

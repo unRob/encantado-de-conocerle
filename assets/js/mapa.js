@@ -21,7 +21,7 @@ Mapa.prototype.setup = function(api_key){
 	document.body.appendChild(script);
 	this.input.focus();
 
-	return this;
+	return self;
 };
 
 Mapa.geo_query = null;
